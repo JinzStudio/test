@@ -1,0 +1,9 @@
+baseURL = "https://localhost:1313/"   # 先随便写一个占位也行
+title = "Test Site"
+theme = "PaperMod"
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[pagination]
+  pagerSize = 5

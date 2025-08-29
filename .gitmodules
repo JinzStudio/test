@@ -1,0 +1,3 @@
+[submodule "themes/PaperMod"]
+	path = themes/PaperMod
+	url = ssh://git@ssh.github.com:443/adityatelange/hugo-PaperMod.git
