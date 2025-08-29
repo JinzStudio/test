@@ -1,0 +1,92 @@
+{{/* 
+  Shortcode: respimg（响应式图片 + WebP + srcset，强校验版本）
+  用法示例：
+    {{< respimg src="cover.jpg" alt="封面" >}}                           # 走默认 480,800,1200
+    {{< respimg src="cover.jpg" alt="封面" widths="480,800,1200" >}}     # 仅宽度
+    {{< respimg src="cover.jpg" alt="封面" widths="480x320,800x533" >}}  # 指定宽高
+*/}}
+
+{{/* 参数 */}}
+{{ $src     := .Get "src"     | default "" }}
+{{ $alt     := .Get "alt"     | default "" }}
+{{ $class   := .Get "class"   | default "" }}
+{{ $quality := .Get "quality" | default "82" }}
+{{ $sizes   := .Get "sizes"   | default "(max-width: 800px) 100vw, 800px" }}
+
+{{/* 读取 widths 字符串并拆分 */}}
+{{ $widthsStr := .Get "widths" | default "480,800,1200" }}
+{{ $rawList   := split $widthsStr "," }}
+
+{{/* 仅接受两种格式：^\d+$  或  ^\d+x\d+$ ；其它全部丢弃 */}}
+{{ $onlyWRe := `^\d+$` }}
+{{ $wxhRe   := `^\d+x\d+$` }}
+
+{{ $specs := slice }}   {{/* 真正用于 Resize 的尺寸串：如 "800x"、"800x533" */}}
+{{ $wOnly := slice }}   {{/* 对应的宽度数字（用于 srcset 的 800w 标记） */}}
+
+{{ range $rawList }}
+  {{ $token := trim . " " | lower }}
+  {{ if gt (len $token) 0 }}
+    {{ if gt (len (findRE $onlyWRe $token)) 0 }}
+      {{/* 纯宽：转成 "800x" 供 .Resize 使用 */}}
+      {{ $specs = $specs | append (printf "%sx" $token) }}
+      {{ $wOnly = $wOnly | append $token }}
+    {{ else if gt (len (findRE $wxhRe $token)) 0 }}
+      {{/* 宽高：原样作为 Resize 规格，同时提取宽度部分做 srcset 标记 */}}
+      {{ $specs = $specs | append $token }}
+      {{ $wOnly = $wOnly | append (index (split $token "x") 0) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* 如果全被丢弃（传错了或尾逗号导致空），强制回退到 800x */}}
+{{ if eq (len $specs) 0 }}
+  {{ $specs = slice "800x" }}
+  {{ $wOnly = slice "800" }}
+{{ end }}
+
+{{/* 取原图资源（必须在 Page Bundle 中） */}}
+{{ $orig := .Page.Resources.GetMatch $src }}
+{{ if not $orig }}
+  {{ errorf "respimg: cannot find resource %q in page bundle %q" $src .Page.File.Path }}
+{{ end }}
+
+{{/* SVG 不能 Resize：降级为原图 */}}
+{{ $isSVG := eq (lower $orig.MediaType.SubType) "svg" }}
+{{ if $isSVG }}
+  <img
+    src="{{ $orig.RelPermalink }}"
+    alt="{{ $alt }}"
+    loading="lazy"
+    decoding="async"
+    class="{{ $class }}">
+{{ else }}
+
+  {{/* 生成 srcset（webp + 原格式） */}}
+  {{ $webpSet := slice }}
+  {{ $origSet := slice }}
+
+  {{ range $i, $spec := $specs }}
+    {{ $webp := $orig.Resize (printf "%s webp q%s" $spec $quality) }}
+    {{ $img  := $orig.Resize (printf "%s q%s"       $spec $quality) }}
+    {{ $webpSet = $webpSet | append (printf "%s %sw" $webp.RelPermalink (index $wOnly $i)) }}
+    {{ $origSet = $origSet | append (printf "%s %sw" $img.RelPermalink  (index $wOnly $i)) }}
+  {{ end }}
+
+  {{/* 默认展示用中位尺寸；仅 1 个时就用它 */}}
+  {{ $idx := 0 }}
+  {{ if ge (len $specs) 2 }}{{ $idx = sub (len $specs) 2 }}{{ end }}
+  {{ $default := $orig.Resize (printf "%s q%s" (index $specs $idx) $quality) }}
+
+  <picture>
+    <source type="image/webp" srcset="{{ delimit $webpSet ", " }}" sizes="{{ $sizes }}">
+    <img
+      src="{{ $default.RelPermalink }}"
+      srcset="{{ delimit $origSet ", " }}"
+      sizes="{{ $sizes }}"
+      alt="{{ $alt }}"
+      loading="lazy"
+      decoding="async"
+      class="{{ $class }}">
+  </picture>
+{{ end }}

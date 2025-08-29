@@ -35,6 +35,10 @@ enableRobotsTXT = true
     lineNos = true
     lineNumbersInTable = true
 
+[minify]
+  disableXML = true
+  minifyOutput = true
+
 [params]
   env = "production"
   defaultTheme = "auto"
