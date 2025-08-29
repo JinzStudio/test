@@ -1,5 +1,5 @@
 # ------------ 基本站点信息 ------------
-baseURL = "https://example.com/"   # ← 改成你的正式域名；本地测试不影响
+baseURL = "https://deft-heliotrope-dd0220.netlify.app/"   # ← 改成你的正式域名；本地测试不影响
 title = "JINZSTUIO"
 languageCode = "zh-cn"
 theme = "PaperMod"
@@ -42,7 +42,8 @@ enableRobotsTXT = true
   ShowReadingTime = true
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
-  ShowShareButtons = true
+  ShowShareButtons = false
+  ShareButtons = ["twitter","bilibili"]  # 指定要显示的平台
   ShowCodeCopyButtons = true
   ShowRssButtonInSectionTermList = true
   ShowToc = true
@@ -52,9 +53,6 @@ enableRobotsTXT = true
     Title = "Hello，这里是 JinzStudio"
     Content = "记录 Godot 游戏开发、算法与独立开发流水账。这里是我的知识与项目基地。"
 
-  [[params.socialIcons]]
-    name = "github"
-    url  = "https://github.com/你的用户名"     # ← 改成你的
   [[params.socialIcons]]
     name = "bilibili"
     url  = "https://space.bilibili.com/73006616" # ← 改成你的
@@ -69,6 +67,13 @@ enableRobotsTXT = true
     includeScore = false
     minMatchCharLength = 2
     keys = ["title", "permalink", "summary", "content"]
+  
+  [params.assets]
+    favicon = "favicon.ico"
+    favicon16x16 = "favicon-16x16.png"
+    favicon32x32 = "favicon-32x32.png"
+    apple_touch_icon = "apple-touch-icon.png"
+    safari_pinned_tab = "favicon.ico" # 如果没有专门的 svg，可以先用 ico
 
 [menu]
   [[menu.main]]
