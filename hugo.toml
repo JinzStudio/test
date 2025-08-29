@@ -1,9 +1,96 @@
-baseURL = "https://localhost:1313/"   # 先随便写一个占位也行
-title = "Test Site"
+# ------------ 基本站点信息 ------------
+baseURL = "https://example.com/"   # ← 改成你的正式域名；本地测试不影响
+title = "JINZSTUIO"
+languageCode = "zh-cn"
 theme = "PaperMod"
-
-[outputs]
-home = ["HTML", "RSS", "JSON"]
+defaultContentLanguage = "zh"
+enableRobotsTXT = true
 
 [pagination]
-  pagerSize = 5
+  pagerSize = 10
+
+# 输出（含 JSON，给搜索用）
+[outputs]
+  home    = ["HTML", "RSS", "JSON"]
+  section = ["HTML", "RSS"]
+  taxonomy= ["HTML", "RSS"]
+  term    = ["HTML", "RSS"]
+  page    = ["HTML"]
+
+# 文章链接
+[permalinks]
+  posts = "/posts/:year/:month/:slug/"
+
+[taxonomies]
+  category = "categories"
+  tag      = "tags"
+  series   = "series"
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.highlight]
+    noClasses = false
+    guessSyntax = true
+    lineNos = true
+    lineNumbersInTable = true
+
+[params]
+  env = "production"
+  defaultTheme = "auto"
+  disableThemeToggle = false
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowShareButtons = true
+  ShowCodeCopyButtons = true
+  ShowRssButtonInSectionTermList = true
+  ShowToc = true
+  TocOpen = false
+
+  [params.homeInfoParams]
+    Title = "Hello，这里是 JinzStudio"
+    Content = "记录 Godot 游戏开发、算法与独立开发流水账。这里是我的知识与项目基地。"
+
+  [[params.socialIcons]]
+    name = "github"
+    url  = "https://github.com/你的用户名"     # ← 改成你的
+  [[params.socialIcons]]
+    name = "bilibili"
+    url  = "https://space.bilibili.com/73006616" # ← 改成你的
+  [[params.socialIcons]]
+    name = "email"
+    url  = "mailto:jinzstudio10@gmail.com"            # ← 改成你的
+
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    includeMatches = false
+    includeScore = false
+    minMatchCharLength = 2
+    keys = ["title", "permalink", "summary", "content"]
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "文章"
+    url = "/posts/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "categories"
+    name = "分类"
+    url = "/categories/"
+    weight = 20
+
+  [[menu.main]]
+    identifier = "tags"
+    name = "标签"
+    url = "/tags/"
+    weight = 30
+
+  [[menu.main]]
+    identifier = "about"
+    name = "关于"
+    url = "/about/"
+    weight = 40
