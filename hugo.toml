@@ -1,5 +1,5 @@
 # ------------ 基本站点信息 ------------
-baseURL = "https://deft-heliotrope-dd0220.netlify.app/"   # ← 改成你的正式域名；本地测试不影响
+baseURL = "https://jinzstudio.com/"   # ← 改成你的正式域名；本地测试不影响
 title = "JINZSTUIO"
 languageCode = "zh-cn"
 theme = "PaperMod"
