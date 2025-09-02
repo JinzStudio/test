@@ -5,6 +5,7 @@ languageCode = "zh-cn"
 theme = "PaperMod"
 defaultContentLanguage = "zh"
 enableRobotsTXT = true
+canonifyURLs = true
 
 [pagination]
   pagerSize = 10
@@ -27,8 +28,9 @@ enableRobotsTXT = true
   series   = "series"
 
 [markup]
-  [markup.goldmark.renderer]
-    unsafe = true
+    [markup.goldmark]
+      [markup.goldmark.renderer]
+        unsafe = true
   [markup.highlight]
     noClasses = false
     guessSyntax = true
@@ -43,6 +45,9 @@ enableRobotsTXT = true
   env = "production"
   defaultTheme = "auto"
   disableThemeToggle = false
+  description = "JinzStudio的独立开发笔记。"
+  keywords = ["Godot", "MiniGame", "游戏开发", "WebGame", "个人博客"]
+  author = "JinzStudio"
   ShowReadingTime = true
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
@@ -103,3 +108,18 @@ enableRobotsTXT = true
     name = "关于"
     url = "/about/"
     weight = 40
+  
+  [[menu.main]]
+    name = "Home"
+    url  = "/"
+    weight = 1
+
+  [[menu.footer]]
+    name = "Terms"
+    url  = "/terms/"        # 如果是 GitHub Project Pages，改成 "terms/"
+    weight = 1
+
+  [[menu.footer]]
+    name = "Privacy"
+    url  = "/privacy/"      # 如果是 GitHub Project Pages，改成 "privacy/"
+    weight = 2
