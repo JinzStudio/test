@@ -2,4 +2,4 @@
 title: "关于"
 ---
 
-我是 JinzStudio，专注 Godot 独立游戏开发与教程记录。
+这里是JinzStudio, 希望像金子一样发光且有价值。

@@ -1,0 +1,48 @@
+{{ define "main" }}
+<main class="games-wrap container">
+  <h1 class="games-title">{{ .Title }}</h1>
+  {{ with .Description }}<p class="games-desc">{{ . }}</p>{{ end }}
+
+  <div class="games-grid">
+    {{ range .Pages.ByDate.Reverse }}
+      {{ $p := . }}
+
+      {{ $cover := $p.Params.cover }}
+      {{ if eq (printf "%T" $cover) "string" }}{{ $cover = dict "image" $cover }}{{ end }}
+
+      {{ $img := "" }}
+      {{ with $cover.image }}
+        {{ with $p.Resources.GetMatch (printf "*%s" .) }}
+          {{ $img = .RelPermalink }}
+        {{ else }}
+          {{ $img = (printf "%s%s" $p.RelPermalink .) | relURL }}
+        {{ end }}
+      {{ end }}
+
+      {{ $alt := $p.Title }}
+      {{ with $cover }}{{ with .alt }}{{ $alt = . }}{{ end }}{{ end }}
+
+      {{ $link := $p.RelPermalink }}
+      {{ with $p.Params.play_url }}{{ $link = . }}{{ end }}
+
+      <a class="game-card" href="{{ $link }}" rel="noopener">
+        <div class="thumb">
+          {{ if $img }}
+            <img src="{{ $img }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+          {{ else }}
+            <div class="ph"></div>
+          {{ end }}
+        </div>
+        <div class="meta">
+          <h3 class="title">{{ $p.Title }}</h3>
+          {{ with $p.Params.description }}<p class="summary">{{ . }}</p>{{ end }}
+          <div class="badges">
+            {{ with $p.Params.rating }}<span class="badge">★ {{ . }}</span>{{ end }}
+            {{ if $p.Params.free }}<span class="badge badge-free">FREE</span>{{ end }}
+          </div>
+        </div>
+      </a>
+    {{ end }}
+  </div>
+</main>
+{{ end }}

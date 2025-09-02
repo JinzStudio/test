@@ -1,0 +1,15 @@
+{{ define "main" }}
+<main class="game-page container">
+  <h1 class="game-title">{{ .Title }}</h1>
+  {{ with .Params.description }}<p class="game-sub">{{ . }}</p>{{ end }}
+  {{ with .Params.play_url }}
+    <div style="position:relative;aspect-ratio:16/9;">
+      <iframe src="{{ . }}" loading="lazy" frameborder="0"
+              allow="autoplay; fullscreen; gamepad"
+              allowfullscreen
+              style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;"></iframe>
+    </div>
+  {{ end }}
+  <article class="post-content">{{ .Content }}</article>
+</main>
+{{ end }}

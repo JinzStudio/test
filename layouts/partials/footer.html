@@ -6,29 +6,18 @@
         {{- else }}
         <span>&copy; {{ now.Year }} <a href="{{ "" | absLangURL }}">{{ site.Title }}</a></span>
         {{- end }}
-        {{- print " · "}}
     {{- end }}
 
     {{- with site.Params.footer.text }}
         {{ . | markdownify }}
-        {{- print " · "}}
     {{- end }}
-
-    {{ with .Site.Menus.footer }}
-        <nav class="footer-links">
-            {{ range . }}
-                <a href="{{ .URL | relURL }}">{{ .Name }}</a>
-            {{ end }}
-        </nav>
-    {{ end }}
-    
-    <!-- 自定义的 Terms/Privacy 链接 -->
-    <nav class="footer-links">
-        <a href="/terms/">Terms</a> · 
-        <a href="/privacy/">Privacy</a> · 
-    </nav>
-
-
+    <span>  
+        &nbsp;|&nbsp;
+        <a href="/terms/">Terms of Service</a>
+        &nbsp;|&nbsp;
+        <a href="/privacy/">Privacy Policy</a>
+    </br>
+    </span>  
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

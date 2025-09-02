@@ -6,5 +6,4 @@ draft: false
 
 封面下方示例：
 
-{{< respimg src="cover.jpg" alt="封面" >}}
-{{< respimg src="Suzy.png" alt="示例图" widths="480,800,1200,1600" >}}
+{{< respimg src="cover.png" alt="封面" >}}

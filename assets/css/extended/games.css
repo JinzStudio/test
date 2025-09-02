@@ -1,0 +1,40 @@
+/* 列表页 */
+.games-wrap {padding: 1rem 0 2rem;}
+.games-title {margin: .2rem 0 1rem;}
+.games-desc {opacity:.8;margin-bottom:1rem;}
+
+.games-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.game-card {
+  display:block; border-radius:14px; overflow:hidden;
+  background: var(--entry); color: inherit; text-decoration:none;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.game-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-l); }
+.game-card .thumb { aspect-ratio: 16/9; background:#111; }
+.game-card .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+.game-card .meta { padding:12px; }
+.game-card .title { margin:.2rem 0; font-size:1.02rem; }
+.game-card .summary { margin:.2rem 0 0; font-size:.92rem; opacity:.85; line-height:1.35; }
+.badges { margin-top:.4rem; display:flex; gap:8px; }
+.badge { font-size:.78rem; padding:.14rem .42rem; border-radius:.5rem; background:var(--code-bg); }
+.badge-free { background:#2ecc71; color:#000; }
+
+/* 详情页 iframe 自适应 */
+.game-frame { position: relative; width:100%; max-width: 1200px; margin: 14px auto 18px;
+  --ratio: 16/9;
+}
+.game-frame::before {
+  content:""; display:block; width:100%;
+  padding-top: calc(100% / (var(--ratio)));
+}
+.game-frame iframe {
+  position:absolute; inset:0; width:100%; height:100%; border:0; border-radius:12px;
+  background:#000;
+}
+.game-title { margin:.2rem 0 .6rem; }
+.game-sub { opacity:.9; margin-bottom:.8rem; }
