@@ -75,6 +75,10 @@ canonifyURLs = true
     includeMatches = false
     includeScore = false
     minMatchCharLength = 2
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    limit = 10 # 限制返回结果条数（Fuse.js 方法参数也支持limit）
     keys = ["title", "permalink", "summary", "content"]
   
   [params.assets]
@@ -102,3 +106,9 @@ canonifyURLs = true
     name = "游戏"
     url = "/games/"
     weight = 15
+  
+  [[menu.main]]
+    identifier = "search"
+    name = "Search"
+    url = "/search/"
+    weight = 30
