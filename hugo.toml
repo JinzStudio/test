@@ -6,6 +6,7 @@ theme = "PaperMod"
 defaultContentLanguage = "zh"
 enableRobotsTXT = true
 canonifyURLs = true
+googleAnalytics = "G-M8MMBKRXQZ"
 
 [pagination]
   pagerSize = 10
