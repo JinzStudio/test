@@ -7,6 +7,7 @@
 
 <head>
     {{- partial "head.html" . }}
+    {{- partial "extend_head.html" . }}
 </head>
 
 <body class="
@@ -21,7 +22,9 @@
     <main class="main">
         {{- block "main" . }}{{ end }}
     </main>
-    {{ partialCached "footer.html" . .Layout .Kind (.Param "hideFooter") (.Param "ShowCodeCopyButtons") -}}
+
+    {{ partial "footer.html" . }}        <!-- 主题页脚 -->
+    {{ partial "extend_footer.html" . }} <!-- 你的额外脚本/HTML（可选） -->
 </body>
 
 <amp-auto-ads type="adsense"

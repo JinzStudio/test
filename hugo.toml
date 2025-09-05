@@ -57,6 +57,7 @@ googleAnalytics = "G-M8MMBKRXQZ"
   ShowCodeCopyButtons = true
   ShowRssButtonInSectionTermList = true
   ShowToc = true
+  mainSections = ["posts"]
   TocOpen = false
 
   [params.homeInfoParams]
