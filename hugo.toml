@@ -37,6 +37,7 @@ googleAnalytics = "G-M8MMBKRXQZ"
     guessSyntax = true
     lineNos = true
     lineNumbersInTable = true
+    style = "dracula"   
 
 [minify]
   disableXML = true
@@ -49,9 +50,9 @@ googleAnalytics = "G-M8MMBKRXQZ"
   description = "JinzStudio的独立开发笔记。"
   keywords = ["Godot", "MiniGame", "游戏开发", "WebGame", "个人博客"]
   author = "JinzStudio"
-  ShowReadingTime = true
+  ShowReadingTime = false
   ShowPostNavLinks = true
-  ShowBreadCrumbs = true
+  ShowBreadCrumbs = false
   ShowShareButtons = false
   ShareButtons = ["twitter","bilibili"]  # 指定要显示的平台
   ShowCodeCopyButtons = true
@@ -93,24 +94,30 @@ googleAnalytics = "G-M8MMBKRXQZ"
 [menu]
   [[menu.main]]
     identifier = "posts"
-    name = "博客"
+    name = "BLOG"
     url = "/posts/"
     weight = 10
 
   [[menu.main]]
     identifier = "about"
-    name = "About"
+    name = "ABOUT"
     url = "/about/"
     weight = 40
   
   [[menu.main]]
     identifier = "games"
-    name = "游戏"
+    name = "GAME"
     url = "/games/"
     weight = 15
   
   [[menu.main]]
     identifier = "search"
-    name = "Search"
+    name = "SEARCH"
     url = "/search/"
     weight = 30
+
+  [[menu.main]]
+  identifier = "showcase"
+  name = "GODOT"
+  url = "/showcase/"
+  weight = 20

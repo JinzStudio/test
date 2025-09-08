@@ -1,0 +1,44 @@
+/* 页面标题/描述（可按需保留） */
+.sc-title-page { margin: 8px 0 4px; font-size: 28px; }
+.sc-desc { opacity: .7; margin: 0 0 18px; }
+
+/* 网格 */
+.showcase .sc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 28px;
+}
+
+/* 卡片 */
+.sc-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  background: var(--entry);
+  text-decoration: none;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.sc-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-l);
+}
+
+/* 封面图：16:9，裁切铺满 */
+.sc-thumb { aspect-ratio: 16 / 9; background: #111; }
+.sc-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ph { width: 100%; height: 100%; background: #222; }
+
+/* 文本 */
+.sc-meta { padding: 14px 16px 16px; }
+.sc-cat {
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  opacity: .7; margin-bottom: 6px; letter-spacing: .02em;
+}
+.sc-title { margin: 0 0 6px; font-size: 18px; line-height: 1.3; color: var(--primary); }
+.sc-summary { margin: 0; opacity: .75; font-size: 14px; line-height: 1.6; }
+
+/* 右下角小指标 */
+.sc-kpis { margin-top: 10px; display: flex; gap: 12px; font-size: 12px; opacity: .7; }
+.sc-kpi { display: inline-flex; align-items: center; gap: 6px; }

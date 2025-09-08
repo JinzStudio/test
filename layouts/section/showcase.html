@@ -1,0 +1,50 @@
+{{ define "main" }}
+<main class="showcase container">
+  <h1 class="sc-title-page">{{ .Title }}</h1>
+  {{ with .Description }}<p class="sc-desc">{{ . }}</p>{{ end }}
+
+  <div class="sc-grid">
+    {{ range .Pages.ByDate.Reverse }}
+      {{ $page  := . }}
+      {{ $cover := .Params.cover }}
+      {{ if eq (printf "%T" $cover) "string" }}
+        {{ $cover = dict "image" $cover }}
+      {{ end }}
+
+      {{/* 先尝试 Page Bundle 里的资源，再回退到 static 路径 */}}
+      {{ $src := "" }}
+      {{ with $cover }}
+        {{ $p := .image | default "" }}
+        {{ if ne $p "" }}
+          {{ $p2 := strings.TrimPrefix "/" $p }}
+          {{ with $page.Resources.GetMatch (printf "*%s" $p2) }}
+            {{ $src = .RelPermalink }}
+          {{ else }}
+            {{/* 回退：允许 front-matter 写 static 下的相对/绝对路径 */}}
+            {{ $src = (relURL $p) }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+
+      <a class="sc-card" href="{{ .RelPermalink }}">
+        <div class="sc-thumb">
+          {{ if $src }}
+            <img src="{{ $src }}" alt="{{ .Title }}" loading="lazy" decoding="async">
+          {{ else }}
+            <div class="ph"></div>
+          {{ end }}
+        </div>
+        <div class="sc-meta">
+          {{ with .Params.category }}<div class="sc-cat">{{ . }}</div>{{ end }}
+          <h3 class="sc-title">{{ .Title }}</h3>
+          {{ with .Params.description }}<p class="sc-summary">{{ . }}</p>{{ end }}
+          <div class="sc-kpis">
+            {{ with .Params.comments }}<span class="sc-kpi">c {{ . }}</span>{{ end }}
+            {{ with .Params.likes }}<span class="sc-kpi">f {{ . }}</span>{{ end }}
+          </div>
+        </div>
+      </a>
+    {{ end }}
+  </div>
+</main>
+{{ end }}
