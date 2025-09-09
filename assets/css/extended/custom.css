@@ -1,0 +1,25 @@
+/* 修改代码块字体为 monospace，字体大小为14px */
+code {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pre', monospace;
+  font-size: 18px;
+}
+
+/*代码块样式*/
+pre {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  font-size: 18px;
+  line-height: lem;
+  margin: 1.5em 0;
+  overflow: auto;
+  background: var(--code-bg);
+  border-radius: 5px;
+}
+
+/*内嵌代码样式*/
+:not(pre) > code {
+  font-size: 18px;
+  background: var(--inlineCode-bg);
+  color: var(--inlineCode-text);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}

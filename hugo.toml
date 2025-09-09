@@ -37,7 +37,6 @@ googleAnalytics = "G-M8MMBKRXQZ"
     guessSyntax = true
     lineNos = true
     lineNumbersInTable = true
-    style = "dracula"   
 
 [minify]
   disableXML = true
@@ -90,6 +89,7 @@ googleAnalytics = "G-M8MMBKRXQZ"
     favicon32x32 = "favicon-32x32.png"
     apple_touch_icon = "apple-touch-icon.png"
     safari_pinned_tab = "favicon.ico" # 如果没有专门的 svg，可以先用 ico
+    customCSS = ["css/extended/custom.css"]
 
 [menu]
   [[menu.main]]

@@ -64,6 +64,7 @@ func _ready():
     # 设置文本颜色
     self.module = Color(1, 0, 0)  # 红色文本
 ```
+
 ### 4. Button（按钮）
 可点击的按钮。
 ```gdscript
