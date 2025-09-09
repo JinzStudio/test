@@ -1,6 +1,10 @@
+.games-page-header,
+.games-header {
+    margin: 24px auto var(--content-gap) auto;
+}
 /* 列表页 */
 .games-wrap {padding: 1rem 0 2rem;}
-.games-title {margin: .2rem 0 1rem;}
+.games-title {margin-bottom: 2px; font-size: 40px;}
 .games-desc {opacity:.8;margin-bottom:1rem;}
 
 .games-grid {

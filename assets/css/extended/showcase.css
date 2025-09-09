@@ -1,6 +1,10 @@
+.sc-page-header,
+.sc-header {
+    margin: 24px auto var(--content-gap) auto;
+}
 /* 页面标题/描述（可按需保留） */
-.sc-title-page { margin: 8px 0 4px; font-size: 28px; }
-.sc-desc { opacity: .7; margin: 0 0 18px; }
+.sc-title { margin-bottom: 2px; font-size: 40px; }
+.sc-desc { opacity:.8;margin-bottom:1rem; }
 
 /* 网格 */
 .showcase .sc-grid {

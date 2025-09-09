@@ -94,7 +94,7 @@ googleAnalytics = "G-M8MMBKRXQZ"
 [menu]
   [[menu.main]]
     identifier = "posts"
-    name = "BLOG"
+    name = "POSTS"
     url = "/posts/"
     weight = 10
 

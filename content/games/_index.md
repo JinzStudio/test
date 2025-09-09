@@ -1,4 +1,4 @@
 ---
-title: "小游戏"
+title: "Game"
 description: "一些小游戏项目 / Demo"
 ---
