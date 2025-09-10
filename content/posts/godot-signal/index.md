@@ -1,10 +1,11 @@
 ---
 title: "Godot 信号（Signal）基础教程"
-date: 2025-08-29
 tags: ["Godot", "教程"]
+date: 2025-09-04
 categories: ["开发"]
 draft: false
 ---
+
 信号是Godot中非常重要的通信机制，允许节点在特定事件发生时通知其他节点。
 下面是最基本、最简单的信号使用用例。
 ### 1. 内置信号 - 按钮点击
@@ -102,6 +103,3 @@ func _on_body_entered(body):
 2. **连接信号**:使用``signal_name.connect(method_name)``
 3. **发射信号**:使用``signal_name.emit()``或``signal_name.emit(parameters)``
 4. **处理信号**：创建接收信号的方法， 参数与信号定义匹配
-
-
-
