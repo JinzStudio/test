@@ -75,20 +75,31 @@ async function startGodotGame() {
         display: none;
         position: absolute;
         top: 0; left: 0;
-        width: 540px;
-        height: 960px;
+        width: 100%;
+        height: 100%;
     `;
     container.appendChild(canvas);
 
     function resizeCanvas() {
-        canvas.width = container.clientWidth;
-        canvas.height = container.clientHeight;
+        const aspectRatio = 9 / 16; // 竖屏比例
+        let w = container.clientWidth;
+        let h = container.clientHeight;
+
+        if (w / h > aspectRatio) {
+            w = h * aspectRatio;
+        } else {
+            h = w / aspectRatio;
+        }
+
+        canvas.width = w;
+        canvas.height = h;
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+        canvas.style.margin = "0 auto";
     }
 
     window.addEventListener('resize', resizeCanvas);
-
-    // 立即执行一次，确保初始尺寸正确
-    resizeCanvas();
+    resizeCanvas(); // 初始执行
 
     try {
         loadingMessageElement.style.display = 'flex';
@@ -159,33 +170,26 @@ document.addEventListener('DOMContentLoaded', startGodotGame);
 }
 
 .game-container {
-    display: block;
-    width: 540px;
-    height:960px;
-    justify-content: left;
-    margin: 30px 0;
+    width: 100%;
+    max-width: 540px;   /* ✅ 限制 PC 最大宽度 */
+    margin: 30px auto;
     padding: 0 10px;
 }
 
 #godot-container {
-    width: 540px;
-    height: 960px;
-    /* aspect-ratio: 9 / 16; */
-    position: absolute;
-    top: 0; left: 0;
+    width: 100%;
+    aspect-ratio: 9 / 16; /* ✅ 关键，保持竖屏比例 */
+    position: relative;
     border: 2px solid #ddd;
     border-radius: 4px;
     overflow: hidden;
     background: #fff;
 }
 
-/* 明确给canvas位置相关样式 */
+/* Canvas 占满容器 */
 #godot-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 540px;
-    height: 960px;
+    width: 100%;
+    height: 100%;
     display: block;
 }
 
@@ -242,12 +246,6 @@ document.addEventListener('DOMContentLoaded', startGodotGame);
 }
 
 @media (max-width: 900px) {
-    #godot-container {
-        width: 100%;
-        /* aspect-ratio: 9 / 16; */
-        height: auto;
-    }
-
     .godot-game-page {
         padding: 10px;
     }
