@@ -28,7 +28,7 @@
 .badge { font-size:.78rem; padding:.14rem .42rem; border-radius:.5rem; background:var(--code-bg); }
 .badge-free { background:#2ecc71; color:#000; }
 
-/* 详情页 iframe 自适应 */
+/* 详情页 iframe 自适应
 .game-frame { position: relative; width:100%; max-width: 1200px; margin: 14px auto 18px;
   --ratio: 16/9;
 }
@@ -38,7 +38,23 @@
 }
 .game-frame iframe {
   position:absolute; inset:0; width:100%; height:100%; border:0; border-radius:12px;
-  background:#000;
+  background:#000; */
+/* } */
+.game-frame {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 比例 */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
 }
+
+.game-frame iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .game-title { margin:.2rem 0 .6rem; }
 .game-sub { opacity:.9; margin-bottom:.8rem; }

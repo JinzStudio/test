@@ -9,7 +9,7 @@ canonifyURLs = true
 googleAnalytics = "G-M8MMBKRXQZ"
 
 [pagination]
-  pagerSize = 10
+  pagerSize = 12
 
 # 输出（含 JSON，给搜索用）
 [outputs]
@@ -47,7 +47,7 @@ googleAnalytics = "G-M8MMBKRXQZ"
   defaultTheme = "auto"
   disableThemeToggle = false
   description = "JinzStudio的独立开发笔记。"
-  keywords = ["Godot", "MiniGame", "游戏开发", "WebGame", "个人博客"]
+  keywords = ["Godot", "MiniGame", "游戏开发", "WebGame", "个人博客", "JinzStudio"]
   ShowReadingTime = false
   ShowPostNavLinks = true
   ShowBreadCrumbs = false
@@ -90,6 +90,7 @@ googleAnalytics = "G-M8MMBKRXQZ"
     apple_touch_icon = "apple-touch-icon.png"
     safari_pinned_tab = "favicon.ico" # 如果没有专门的 svg，可以先用 ico
     customCSS = ["css/extended/custom.css"]
+    css = ["css/extended/showcase.css"]
 
 [menu]
   [[menu.main]]

@@ -4,7 +4,8 @@
   {{ with .Description }}<p class="sc-desc">{{ . }}</p>{{ end }}
 
   <div class="sc-grid">
-    {{ range .Pages.ByDate.Reverse }}
+    {{ $paginator := .Paginate (.Pages.ByDate.Reverse) }}
+      {{ range $paginator.Pages }}
       {{ $page  := . }}
       {{ $cover := .Params.cover }}
       {{ if eq (printf "%T" $cover) "string" }}
@@ -46,5 +47,21 @@
       </a>
     {{ end }}
   </div>
+        <nav class="pagination">
+        {{ if $paginator.HasPrev }}
+          <a href="{{ $paginator.Prev.URL }}">←</a>
+        {{ end }}
+
+        {{ range $paginator.Pagers }}
+          <a href="{{ .URL }}"
+            class="{{ if eq . $paginator }}active{{ end }}">
+            {{ .PageNumber }}
+          </a>
+        {{ end }}
+
+        {{ if $paginator.HasNext }}
+          <a href="{{ $paginator.Next.URL }}">→</a>
+        {{ end }}
+      </nav>
 </main>
 {{ end }}

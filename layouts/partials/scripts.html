@@ -1,0 +1,2 @@
+{{ $custom := resources.Get "js/custom.js" | minify }}
+<script src="{{ $custom.RelPermalink }}"></script>

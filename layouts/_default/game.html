@@ -1,0 +1,260 @@
+{{ define "main" }}
+<div class="godot-game-page">
+  <article>
+    <header class="page-header">
+      <h1>{{ .Title }}</h1>
+    </header>
+
+    <div class="game-container">
+      <div id="godot-container">
+        <div id="loading-message" class="loading-message">游戏加载中...</div>
+        <!-- Canvas 将由 JS 动态插入 -->
+      </div>
+    </div>
+
+    <div class="game-content">
+      {{ .Content }}
+    </div>
+  </article>
+</div>
+
+<script>
+function getGodotBasePath() {
+    const basePath = '{{ "play/hxllk/" | absURL }}';
+    let cleanPath = basePath.endsWith('/') ? basePath : basePath + '/';
+    cleanPath = cleanPath.replace(/([^:])(\/\/+)/g, '$1/');
+    return cleanPath;
+}
+
+const GODOT_BASE_PATH = getGodotBasePath();
+console.log('Godot 基础路径:', GODOT_BASE_PATH);
+
+function loadGodotScript() {
+    return new Promise((resolve, reject) => {
+        const scriptUrl = GODOT_BASE_PATH + 'index.js';
+        const script = document.createElement('script');
+        script.src = scriptUrl;
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error(`无法加载 ${scriptUrl}`));
+        document.head.appendChild(script);
+    });
+}
+
+let gameIsShown = false;
+
+function showGameCanvas() {
+    if (gameIsShown) return;
+    gameIsShown = true;
+
+    const loadingEl = document.getElementById('loading-message');
+    const canvasEl = document.getElementById('godot-canvas');
+
+    if (loadingEl) loadingEl.style.setProperty('display', 'none', 'important');
+    if (canvasEl) canvasEl.style.setProperty('display', 'block', 'important');
+
+    window.dispatchEvent(new Event('resize'));
+}
+
+async function startGodotGame() {
+    const container = document.getElementById('godot-container');
+    let loadingMessageElement = document.getElementById('loading-message');
+
+    container.style.position = 'relative';
+    container.innerHTML = '';
+
+    if (!loadingMessageElement) {
+        loadingMessageElement = document.createElement('div');
+        loadingMessageElement.id = 'loading-message';
+        loadingMessageElement.className = 'loading-message';
+    }
+    container.appendChild(loadingMessageElement);
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'godot-canvas';
+    canvas.style.cssText = `
+        display: none;
+        position: absolute;
+        top: 0; left: 0;
+        width: 540px;
+        height: 960px;
+    `;
+    container.appendChild(canvas);
+
+    function resizeCanvas() {
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    // 立即执行一次，确保初始尺寸正确
+    resizeCanvas();
+
+    try {
+        loadingMessageElement.style.display = 'flex';
+        loadingMessageElement.innerHTML = '加载游戏引擎...';
+
+        await loadGodotScript();
+        if (typeof Engine === 'undefined') throw new Error('Engine 未定义');
+
+        const config = {
+            unloadAfterInit: false,
+            canvas,
+            executable: GODOT_BASE_PATH + 'index',
+            mainPack: GODOT_BASE_PATH + 'index.pck',
+            canvasResizePolicy: 2, // 0=none, 1=expand, 2=project, 3=viewport
+            args: ['--main-pack', GODOT_BASE_PATH + 'index.pck'],
+            onProgress: (current, total) => {
+                if (total > 0) {
+                    const progress = (current / total) * 100;
+                    loadingMessageElement.innerHTML = `加载游戏资源... ${Math.round(progress)}%`;
+                    if (progress >= 99) showGameCanvas();
+                }
+            },
+            onExit: (code) => {
+                loadingMessageElement.style.display = 'block';
+                loadingMessageElement.className = 'error-message';
+                loadingMessageElement.innerHTML = `
+                    <h3>游戏已结束</h3>
+                    <p>退出代码: ${code}</p>
+                    <button onclick="location.reload()">重新开始</button>
+                `;
+                canvas.style.display = 'none';
+            }
+        };
+
+        const engine = new Engine(config);
+        await engine.startGame();
+        setTimeout(showGameCanvas, 500);
+    } catch (error) {
+        console.error('游戏启动失败:', error);
+        loadingMessageElement.className = 'error-message';
+        loadingMessageElement.innerHTML = `
+            <h3>游戏加载失败</h3>
+            <p>${error.message}</p>
+            <button onclick="location.reload()">重试</button>
+        `;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', startGodotGame);
+</script>
+
+<style>
+.godot-game-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    color: #333;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.game-container {
+    display: block;
+    width: 540px;
+    height:960px;
+    justify-content: left;
+    margin: 30px 0;
+    padding: 0 10px;
+}
+
+#godot-container {
+    width: 540px;
+    height: 960px;
+    /* aspect-ratio: 9 / 16; */
+    position: absolute;
+    top: 0; left: 0;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+}
+
+/* 明确给canvas位置相关样式 */
+#godot-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 540px;
+    height: 960px;
+    display: block;
+}
+
+.loading-message,
+.error-message {
+    font-size: 18px;
+    text-align: center;
+    padding: 30px;
+}
+
+.loading-message {
+    color: #aaa;
+    font-size: 20px;
+}
+
+.error-message {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    border-radius: 8px;
+    margin: 10px;
+}
+
+.error-message h3 {
+    margin-bottom: 15px;
+    color: #d63031;
+}
+
+.error-message button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #007acc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.error-message button:hover {
+    background: #005a9e;
+}
+
+.error-message button:active {
+    transform: translateY(1px);
+}
+
+.game-content {
+    max-width: 560px;
+    margin: 40px auto;
+    line-height: 1.6;
+    font-size: 16px;
+    color: #555;
+}
+
+@media (max-width: 900px) {
+    #godot-container {
+        width: 100%;
+        /* aspect-ratio: 9 / 16; */
+        height: auto;
+    }
+
+    .godot-game-page {
+        padding: 10px;
+    }
+
+    .game-container {
+        margin: 20px 0;
+    }
+}
+</style>
+{{ end }}

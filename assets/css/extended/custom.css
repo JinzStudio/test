@@ -35,7 +35,8 @@ pre {
   font-size: medium;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
-  
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .chroma .hl { background-color: #24213b }
@@ -45,3 +46,21 @@ pre {
 main {
   padding-top: 80px;
 } */
+
+.logo a img, .logo a svg {
+    display: inline;
+    vertical-align: middle;
+    pointer-events: none;
+    transform: translate(0, -10%);
+    border-radius: 6px;
+    margin-inline-end: 8px;
+}
+
+.logo a {
+    font-size: 48px;
+    font-weight: 700;
+}
+
+#menu a {
+    font-size: 24px;
+}

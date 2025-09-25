@@ -1,4 +1,4 @@
 ---
-title: "首页"
-description: "欢迎来到我的 Hugo 站点"
+title: "description"
+summary: "欢迎来到我的Hugo站点"
 ---

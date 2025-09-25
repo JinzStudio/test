@@ -9,7 +9,7 @@
 /* 网格 */
 .showcase .sc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 28px;
 }
 
@@ -30,9 +30,9 @@
 }
 
 /* 封面图：16:9，裁切铺满 */
-.sc-thumb { aspect-ratio: 16 / 9; background: #111; }
-.sc-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.ph { width: 100%; height: 100%; background: #222; }
+.sc-thumb { aspect-ratio: 4 / 3; background: #111; }
+.sc-thumb img { width: 100%; height: 230px; object-fit: cover; display: block; }
+.ph { width: 100%; height: 230px; background: #222; }
 
 /* 文本 */
 .sc-meta { padding: 14px 16px 16px; }
@@ -46,3 +46,47 @@
 /* 右下角小指标 */
 .sc-kpis { margin-top: 10px; display: flex; gap: 12px; font-size: 12px; opacity: .7; }
 .sc-kpi { display: inline-flex; align-items: center; gap: 6px; }
+
+.pagination {
+  margin-top: 3rem;       /* 分页和卡片之间的间距 */
+  text-align: center;     /* 居中 */ 
+}
+
+.pagination a {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  margin: 0 0.25rem;       /* 按钮之间的间距 */
+  border-radius: 8px;
+  background: #eee;
+  color: #333;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s ease;
+}
+
+.pagination a.active {
+  background: #1565c0;
+  color: #fff;
+  font-weight: bold;
+}
+
+.pagination a:hover {
+  background: #bbb;
+}
+
+.entry-cover img {
+    border-radius: var(--radius);
+    width: 1290px;
+    height: 768px;
+}
+
+.logo a {
+    font-size: 48px;
+    font-weight: 700;
+}
+
+#menu a {
+    font-size: 24px;
+}

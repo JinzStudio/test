@@ -1,0 +1,73 @@
+{{ define "main" }}
+<main class="homepage container">
+<!-- 顶部欢迎区 -->
+  <section class="hero">
+    <h1>欢迎来到JINZSTUDIO</h1>
+    <p class="intro">这里是我的个人主页，记录开发、项目和笔记</p>
+    <!-- <a href="/docs/" class="btn-docs">进入文档 →</a> -->
+  </section>
+
+  <!-- 最新文章 -->
+  <section class="latest-posts">
+    <h2>POST</h2>
+    <ul>
+      {{ range first 5 (where .Site.RegularPages "Section" "posts") }}
+      <li>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <span class="date">{{ .Date.Format "2006-01-02" }}</span>
+      </li>
+      {{ else }}
+      <p>暂无文章</p>
+      {{ end }}
+    </ul>
+  </section>
+
+  <!-- Showcase -->
+  <section class="home-showcase">
+    <h2>GODOT SHADER</h2>
+    <div class="showcase-grid">
+        {{ range first 8 (where .Site.RegularPages "Section" "showcase") }}
+        {{ $page  := . }}
+        {{ $cover := .Params.cover }}
+        {{ if eq (printf "%T" $cover) "string" }}
+            {{ $cover = dict "image" $cover }}
+        {{ end }}
+
+        {{/* 先尝试 Page Bundle 里的资源，再回退到 static 路径 */}}
+        {{ $src := "" }}
+        {{ with $cover }}
+            {{ $p := .image | default "" }}
+            {{ if ne $p "" }}
+            {{ $p2 := strings.TrimPrefix "/" $p }}
+            {{ with $page.Resources.GetMatch (printf "*%s" $p2) }}
+                {{ $src = .RelPermalink }}
+            {{ else }}
+                {{ $src = (relURL $p) }}
+            {{ end }}
+            {{ end }}
+        {{ end }}
+
+        <div class="showcase-card">
+            <a href="{{ .RelPermalink }}">
+            <div class="sc-thumb">
+                {{ if $src }}
+                <img src="{{ $src }}" alt="{{ .Title }}" loading="lazy" decoding="async">
+                {{ else }}
+                <div class="ph"></div>
+                {{ end }}
+            </div>
+            <h3>{{ .Title }}</h3>
+            {{ with .Params.description }}
+                <p class="desc">{{ . }}</p>
+            {{ end }}
+            </a>
+        </div>
+        {{ end }}
+    </div>                                                   
+  </section>
+</main>
+<div class="homepage">
+
+  
+</div>
+{{ end }}
